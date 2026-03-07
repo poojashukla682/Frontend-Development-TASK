@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & AMC Entry - Octapro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <span class="brand-text">Octapro</span>
+            </div>
+            <div class="sidebar-label">Main</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li data-page="dashboard"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg></span> Dashboard </li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg></span> Complain / Service <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg></span> Reminder <span class="chevron"></span></li>
+                    <li data-page="customer"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg></span> Customer <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m7.5 4.27 9 5.15" />
+                                <path
+                                    d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                                <path d="m3.3 7 8.7 5 8.7-5" />
+                                <path d="M12 22V12" />
+                            </svg></span> Product / Service <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg></span> Master <span class="chevron"></span></li>
+                    <li class="has-submenu active" data-page="sale">
+                        <div class="menu-item-content">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23" />
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                </svg></span> Sale <span class="chevron down"></span>
+                        </div>
+                        <ul class="submenu">
+                            <li class="active">Bill/Invoice</li>
+                            <li>Sales Return</li>
+                        </ul>
+                    </li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="8" cy="21" r="1" />
+                                <circle cx="19" cy="21" r="1" />
+                                <path
+                                    d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                            </svg></span> Purchase / Supplier <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <line x1="10" y1="9" x2="8" y2="9" />
+                            </svg></span> Quotation <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="5" rx="2" />
+                                <line x1="2" y1="10" x2="22" y2="10" />
+                            </svg></span> Payment / Receipt <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 17h4V5H2v12h3" />
+                                <path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5" />
+                                <circle cx="7.5" cy="17.5" r="2.5" />
+                                <circle cx="17.5" cy="17.5" r="2.5" />
+                            </svg></span> Technician Stock <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg></span> Settings <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
+                            </svg></span> Reports <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23" />
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                            </svg></span> Expenses <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                <line x1="3" y1="9" x2="21" y2="9" />
+                                <line x1="3" y1="15" x2="21" y2="15" />
+                                <line x1="9" y1="3" x2="9" y2="21" />
+                                <line x1="15" y1="3" x2="15" y2="21" />
+                            </svg></span> Table Column Settings <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                            </svg></span> Projects <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="12" y1="18" x2="12" y2="12" />
+                                <line x1="9" y1="15" x2="15" y2="15" />
+                            </svg></span> New Pages <span class="chevron"></span></li>
+                    <li data-page="generic"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <line x1="10" y1="9" x2="8" y2="9" />
+                            </svg></span> Invoices <span class="chevron"></span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="left-head">
+                    <button class="menu-toggle"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg></button>
+                    <div class="header-search">
+                        <span class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg></span>
+                        <input type="text" placeholder="Search here">
+                    </div>
+                </div>
+                <div class="right-head">
+                    <button class="head-btn" id="fullScreenBtn"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                            height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                        </svg></button>
+                    <div class="user-profile">
+                        <div class="avatar"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg></div>
+                        <div class="user-info">
+                            <span class="user-role uppercase">ADMIN</span>
+                            <span class="user-name">admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-area">
+                <div id="sale-page" class="page-section">
+                    <div class="page-title-bar">
+                        <h2>SALES AND AMC ENTRY</h2>
+                        <button class="btn-save shadow" id="saveTopBtn">Save</button>
+                    </div>
+
+                    <div class="form-layout-grid">
+                        <!-- Invoice Details Area -->
+                        <div class="card compact-card">
+                            <h4 class="card-title">Invoice Details:</h4>
+                            <div class="form-grid-2">
+                                <div class="field-item">
+                                    <label>Invoice Number <span class="red">*</span></label>
+                                    <input type="text" value="FD-20" class="input-styled">
+                                </div>
+                                <div class="field-item">
+                                    <label>Invoice Date <span class="red">*</span></label>
+                                    <input type="date" value="2026-03-08" class="input-styled">
+                                </div>
+                            </div>
+                            <div class="field-item mt-10">
+                                <label>Type <span class="red">*</span></label>
+                                <select id="formMainType" class="input-styled">
+                                    <option value="SALES">Select Option</option>
+                                    <option value="SALES">SALES</option>
+                                    <option value="AMC">AMC</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Customer Details Area -->
+                        <div class="card compact-card">
+                            <h4 class="card-title">Customer Details: <span class="red">*</span></h4>
+                            <div class="flex-field">
+                                <div class="searchable-dropdown flex-grow">
+                                    <input type="text" placeholder="Select Options" id="customerSearch"
+                                        class="input-styled">
+                                </div>
+                                <button class="btn-plus" id="addCustomerBtn">+ Customer</button>
+                            </div>
+                            <div class="address-split mt-10">
+                                <div class="address-box">
+                                    <div class="box-head">Billing To:</div>
+                                    <div class="box-content" id="billingDetails">
+                                        <p><span class="label-tiny">Address:</span> <span class="val">-</span></p>
+                                        <p><span class="label-tiny">Contact No.:</span> <span class="val">-</span></p>
+                                        <p><span class="label-tiny">GST No.:</span> <span class="val">-</span></p>
+                                    </div>
+                                </div>
+                                <div class="address-box">
+                                    <div class="box-head">Shipping To: <button class="btn-change-addr"
+                                            id="changeShipBtn">Change</button></div>
+                                    <div class="box-content" id="shippingDetails">
+                                        <p><span class="label-tiny">Address:</span> <span class="val">-</span></p>
+                                        <p><span class="label-tiny">Area:</span> <span class="val">-</span></p>
+                                        <p><span class="label-tiny">Contact No.:</span> <span class="val">-</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Table -->
+                    <div class="card table-card">
+                        <div class="table-responsive">
+                            <table class="octapro-table" id="itemTable">
+                                <thead>
+                                    <tr>
+                                        <th width="40">NO.</th>
+                                        <th>ITEM / SERVICE <span class="red">*</span> <button class="btn-head-add"
+                                                id="addRowBtn">+ ADD</button></th>
+                                        <th width="70">QTY <span class="red">*</span></th>
+                                        <th width="100">RATE TYPE <button class="info-btn" title="View Info">ⓘ</button>
+                                        </th>
+                                        <th width="70">GST% <span class="red">*</span></th>
+                                        <th width="100">RATE <span class="red">*</span></th>
+                                        <th width="110">DISC TYPE</th>
+                                        <th width="100">DISCOUNT <span class="red">*</span></th>
+                                        <th width="100">TOTAL</th>
+                                        <th width="90">WTY/MO *</th>
+                                        <th width="100">SR. NO.</th>
+                                        <th width="60">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="itemTableBody">
+                                    <!-- Rows added via JS -->
+                                </tbody>
+                            </table>
+                            <div class="add-item-row" id="addRowFooterBtn">
+                                <span>+ Add Item</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Totals Area -->
+                    <div class="totals-section">
+                        <div class="totals-left">
+                            <div class="row-total-val"><span>Pre Tax Amount</span> <span id="preTaxAmount">0.00</span>
+                            </div>
+                            <div class="row-total-val"><span>Total Discount</span> <span id="totalDiscount">0.00</span>
+                            </div>
+                            <div class="row-total-val"><span>SGST</span> <span id="sgstAmount">0.00</span></div>
+                            <div class="row-total-val"><span>CGST</span> <span id="cgstAmount">0.00</span></div>
+                            <div class="row-total-val"><span>IGST</span> <span id="igstAmount">0.00</span></div>
+                        </div>
+                        <div class="totals-right">
+                            <div class="row-total-input"><span>Add Charge</span> <input type="number" id="addCharge"
+                                    value="0" class="mini-input"></div>
+                            <div class="row-total-input"><span>Less Charge</span> <input type="number" id="lessCharge"
+                                    value="0" class="mini-input"></div>
+                            <div class="row-total-input">
+                                <span>Round Off</span>
+                                <div class="flex-center">
+                                    <label class="switch-mini"><input type="checkbox" id="roundOff"><span
+                                            class="slider"></span></label>
+                                    <span id="roundOffValue" class="ml-10">0.00</span>
+                                </div>
+                            </div>
+                            <div class="row-total-final"><span>Total Amount</span> <span id="grandTotal">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content modal-wide">
+            <header class="modal-header">
+                <h3>Add Customer</h3>
+                <span class="close">&times;</span>
+            </header>
+            <div class="modal-body p-20">
+                <div class="modal-form-grid-3">
+                    <div class="field-item"><label>Customer Name <span class="red">*</span></label><input type="text"
+                            placeholder="Enter Name"></div>
+                    <div class="field-item"><label>Alias Name</label><input type="text" placeholder="Enter Alias Name">
+                    </div>
+                    <div class="field-item"><label>Reg. Contact No. <span class="red">*</span></label><input type="text"
+                            placeholder="Enter Contact Number"></div>
+
+                    <div class="field-item row-span-2"><label>Address</label><textarea placeholder="Enter Address"
+                            style="height: 100%; min-height: 80px;"></textarea></div>
+                    <div class="field-item">
+                        <label>Area <span class="red">*</span></label>
+                        <div class="flex-field"><select class="flex-grow">
+                                <option>Select Option</option>
+                            </select><button class="btn-blue-sm" id="addAreaBtn">+ Area</button></div>
+                    </div>
+
+                    <div class="field-item">
+                        <label>City <span class="red">*</span></label>
+                        <div class="flex-field"><select class="flex-grow">
+                                <option>Select Option</option>
+                            </select><button class="btn-blue-sm" id="addCityBtn">+ City</button></div>
+                    </div>
+
+                    <div class="field-item"><label>GST Type <span class="red">*</span></label><select>
+                            <option>Select Option</option>
+                        </select></div>
+                    <div class="field-item"><label>GST No.</label><input type="text" placeholder="Enter GST Number">
+                    </div>
+
+                    <div class="field-item"><label>Customer State <span class="red">*</span></label><select>
+                            <option>Select Option</option>
+                        </select></div>
+                    <div class="field-item"><label>Contact Person</label><input type="text"
+                            placeholder="Enter Contact Person"></div>
+                    <div class="field-item"><label>Contact Person No.</label><input type="text"
+                            placeholder="Enter Contact Person No."></div>
+
+                    <div class="field-item"><label>Birthday</label><input type="date"></div>
+                    <div class="field-item"><label>Anniversary</label><input type="date"></div>
+                    <div class="field-item"><label>Email</label><input type="email" placeholder="Enter Email"></div>
+
+                    <div class="field-item span-2"><label>Other Details</label><input type="text"
+                            placeholder="Enter Details"></div>
+                    <div class="field-item"><label>Opening Balance <span class="red">*</span></label><input
+                            type="number" value="0"></div>
+                </div>
+                <div class="modal-footer-btns">
+                    <button class="btn-cancel" id="cancelCustBtn">Cancel</button>
+                    <button class="btn-save-modal" id="saveCustBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="serialModal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Serial Numbers</h3><span class="close">&times;</span>
+            </header>
+            <div id="serialInputsContainer" class="p-20"></div>
+            <div class="p-20"><button class="btn-save-modal" id="saveSerialsBtn" style="width:100%">Save
+                    Serials</button></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
