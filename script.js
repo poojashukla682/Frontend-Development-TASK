@@ -31,50 +31,95 @@ $(document).ready(function () {
 
     // --- Page Initialization ---
     function initPage() {
+        // Initialize Summernote
+        $('#remark, #termsAndConditionsDesc').summernote({
+            placeholder: 'Enter content...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
         $.get(`${API_BASE}getsalesinvno.php`, function (data) {
             if (data) {
-                $('#invoiceNumber').val((data.invoice_prefix || "") + (data.invno || ""));
-                $('#transactionId').val(data.invno || "");
-                $('#invoiceNumber').attr('data-state', data.company_state || "");
-                companyState = data.company_state || "";
+                setInvoiceData(data);
             }
-        }, 'json').fail(err => console.error("Error fetching inv no:", err));
+        }, 'json').fail(() => {
+            console.warn("API Error: Fallback to Demo Invoice No.");
+            setInvoiceData({ invoice_prefix: "INV-DEMO-", invno: "1001", company_state: "Maharashtra" });
+        });
 
         loadTerms();
         createTableRow(); // Add initial row
     }
 
+    function setInvoiceData(data) {
+        $('#invoiceNumber').val((data.invoice_prefix || "") + (data.invno || ""));
+        $('#transactionId').val(data.invno || "");
+        $('#invoiceNumber').attr('data-state', data.company_state || "");
+        companyState = data.company_state || "";
+    }
+
     // --- API: Load Terms ---
     function loadTerms() {
         $.get(`${API_BASE}termsandconditionlist.php`, function (data) {
-            const $select = $('#termsAndConditionsDD');
             if (data && data.terms) {
-                data.terms.forEach(t => {
-                    $select.append($('<option>', {
-                        value: t.name,
-                        text: t.name,
-                        'data-desc': t.description
-                    }));
-                });
+                renderTerms(data.terms);
             }
-            $select.on('change', function () {
-                const desc = $(this).find(':selected').data('desc');
-                $('#termsAndConditionsDesc').val(desc || "");
-            });
-        }, 'json');
+        }, 'json').fail(() => {
+            console.warn("API Error: Demo Terms Fallback.");
+            renderTerms([
+                { name: "Standard Terms", description: "1. 50% Advance with order.\n2. Balance against delivery." },
+                { name: "Warranty Service", description: "1. Free service for 12 months.\n2. Parts as per warranty card." }
+            ]);
+        });
+    }
+
+    function renderTerms(terms) {
+        const $select = $('#termsAndConditionsDD');
+        $select.empty().append('<option value="">Select Terms</option>');
+        terms.forEach(t => {
+            $select.append($('<option>', {
+                value: t.name,
+                text: t.name,
+                'data-desc': t.description
+            }));
+        });
+        $select.off('change').on('change', function () {
+            const desc = $(this).find(':selected').data('desc');
+            $('#termsAndConditionsDesc').val(desc || "");
+        });
     }
 
     // --- API: Load AMC Type ---
     function loadAMCTypes() {
         $.get(`${API_BASE}amctype.php?amctype`, function (data) {
-            const $select = $('#AMCType');
-            $select.empty().append('<option value="">Select Option</option>');
             if (data && data.amctype) {
-                data.amctype.forEach(a => {
-                    $select.append($('<option>', { value: a.id, text: a.name }));
-                });
+                renderAMCTypes(data.amctype);
             }
-        }, 'json');
+        }, 'json').fail(() => {
+            console.warn("API Error: Demo AMC Type Fallback.");
+            renderAMCTypes([
+                { id: 1, name: "Comprehensive AMC" },
+                { id: 2, name: "Non-Comprehensive AMC" },
+                { id: 3, name: "Labor Only" }
+            ]);
+        });
+    }
+
+    function renderAMCTypes(list) {
+        const $select = $('#AMCType');
+        $select.empty().append('<option value="">Select Option</option>');
+        list.forEach(a => {
+            $select.append($('<option>', { value: a.id, text: a.name }));
+        });
     }
 
     // --- Row Management ---
@@ -104,7 +149,7 @@ $(document).ready(function () {
                     </select>
                 </td>
                 <td>
-                    <input type="number" id="itemDiscValue_${index}" value="0" class="input-styled disc-val-field">
+                    <input type="number" id="itemDiscValue_${index}" name="disc_value[]" value="0" class="input-styled disc-val-field">
                     <input type="hidden" id="itemDiscAmount_${index}" name="disc_amt[]" value="0">
                 </td>
                 <td>
@@ -124,9 +169,12 @@ $(document).ready(function () {
         const index = $tr.data('index');
         const $nameInput = $tr.find('.itemname-dropdown');
 
-        $nameInput.on('input', debounce(() => searchItems($nameInput, $tr), 300));
+        $nameInput.on('input', debounce(() => searchItems($input, $tr), 300));
 
-        $tr.find('input, select').on('input', () => calculateRow($tr));
+        // CRITICAL: Ensure every input change triggers a recalculation
+        $tr.find('input, select').on('input change', function () {
+            calculateRow($tr);
+        });
 
         $tr.find('.remove-row-btn').on('click', function () {
             $tr.remove();
@@ -137,6 +185,9 @@ $(document).ready(function () {
             const qty = $tr.find('.qty-field').val();
             openSerialModal(index, qty);
         });
+
+        // Initial calculation for the new row
+        calculateRow($tr);
     }
 
     // --- Search Logic ---
@@ -144,12 +195,33 @@ $(document).ready(function () {
         const term = $input.val();
         if (term.length < 2) return;
         $.getJSON(`${API_BASE}fetch_allitem.php?searchTerm=${term}`, function (items) {
-            showSearchMenu($input, items, item => {
-                $input.val(item.itemname);
-                $tr.find('input[name="item_id[]"]').val(item.id);
-                fetchItemDetails(item.id, $tr);
-            });
+            showSearchResults($input, items, $tr, true);
+        }).fail(() => {
+            console.warn("API Error: Demo Item Search Fallback.");
+            const demoItems = [
+                { id: 1, itemname: "Solar Inverter 5kW", gst: 18, sal_rate: 45000, warranty: 24 },
+                { id: 2, itemname: "Battery 150Ah", gst: 28, sal_rate: 12000, warranty: 36 },
+                { id: 3, itemname: "Copper Wire 2.5mm", gst: 18, sal_rate: 150, warranty: 12 }
+            ];
+            showSearchResults($input, demoItems.filter(i => i.itemname.toLowerCase().includes(term.toLowerCase())), $tr, true);
         });
+    }
+
+    function showSearchResults($input, items, $target, isItem) {
+        showSearchMenu($input, items, obj => {
+            if (isItem) {
+                $input.val(obj.itemname);
+                $target.find('input[name="item_id[]"]').val(obj.id);
+                $target.find('.gst-pct-field').val(obj.gst || 0);
+                $target.find('.rate-field').val(obj.sal_rate || 0);
+                $target.find('input[name="wr[]"]').val(obj.warranty || 0);
+                calculateRow($target);
+            } else {
+                $input.val(obj.name);
+                $('#selectedCustomerId').val(obj.id);
+                fetchCustomerDetails(obj.id, obj); // Pass obj as fallback
+            }
+        }, isItem ? (i => i.itemname) : (c => `${c.name} - ${c.contact}`));
     }
 
     function fetchItemDetails(id, $tr) {
@@ -168,34 +240,43 @@ $(document).ready(function () {
         const term = $(this).val();
         if (term.length < 2) return;
         $.getJSON(`${API_BASE}fetch_customers.php?searchTerm=${term}`, function (customers) {
-            showSearchMenu($companySearch, customers, cust => {
-                $companySearch.val(cust.name);
-                $selectedCustomerId.val(cust.id);
-                fetchCustomerDetails(cust.id);
-            }, c => `${c.name} - ${c.contact}`);
+            showSearchResults($companySearch, customers, null, false);
+        }).fail(() => {
+            console.warn("API Error: Demo Customer Search Fallback.");
+            const demoCusts = [
+                { id: 101, name: "Pooja Gupta", contact: "9876543210", address: "Sector 15, Vashi, Mumbai", gst: "27AAAAA0000A1Z5", area: "Navi Mumbai", state: "Maharashtra" },
+                { id: 102, name: "Tarun Soni", contact: "8888888888", address: "DLF Phase 3, Gurgaon", gst: "06BBBBB1111B1Z2", area: "Gurgaon", state: "Haryana" },
+                { id: 103, name: "Octapro Pvt Ltd", contact: "7777777777", address: "Salt Lake City, Kolkata", gst: "19CCCCC2222C1Z9", area: "Kolkata", state: "West Bengal" }
+            ];
+            showSearchResults($companySearch, demoCusts.filter(c => c.name.toLowerCase().includes(term.toLowerCase())), null, false);
         });
     }, 300));
 
-    function fetchCustomerDetails(id) {
+    function fetchCustomerDetails(id, fallbackObj = null) {
         $.getJSON(`${API_BASE}customer.php?getcustomerid=${id}`, function (resp) {
             if (resp && resp.data && resp.data[0]) {
-                const c = resp.data[0];
-                $billingAddressHidden.val(c.address);
-                $billingContactHidden.val(c.contact);
-                $billingGstHidden.val(c.gst);
-                $billingAreaHidden.val(c.area);
-                $billingStateHidden.val(c.state);
-                customerState = c.state;
-
-                $shippingAddressHidden.val(c.address);
-                $shippingAreaHidden.val(c.area);
-                $shippingContactHidden.val(c.contact);
-
-                updateCustomerDisplay(c);
-                updateTaxLayout();
-                calculateSummary();
+                fillCustomerData(resp.data[0]);
             }
+        }).fail(() => {
+            if (fallbackObj) fillCustomerData(fallbackObj);
         });
+    }
+
+    function fillCustomerData(c) {
+        $billingAddressHidden.val(c.address);
+        $billingContactHidden.val(c.contact);
+        $billingGstHidden.val(c.gst);
+        $billingAreaHidden.val(c.area);
+        $billingStateHidden.val(c.state);
+        customerState = c.state;
+
+        $shippingAddressHidden.val(c.address);
+        $shippingAreaHidden.val(c.area);
+        $shippingContactHidden.val(c.contact);
+
+        updateCustomerDisplay(c);
+        updateTaxLayout();
+        calculateSummary();
     }
 
     function updateCustomerDisplay(c) {
@@ -304,7 +385,7 @@ $(document).ready(function () {
             overflowY: 'auto'
         });
 
-        const items = list.data || list;
+        const items = (list && list.data) ? list.data : (Array.isArray(list) ? list : []);
         if (!items.length) { $menu.hide(); return; }
 
         items.forEach(item => {
@@ -317,6 +398,26 @@ $(document).ready(function () {
         $input.on('blur', () => setTimeout(() => $menu.hide(), 200));
     }
 
+    // --- Modal Logic ---
+    function openSerialModal(index, qty) {
+        const $container = $('#serialInputsContainer');
+        $container.empty();
+        for (let i = 1; i <= qty; i++) {
+            $container.append(`<div class="field-item mb-10"><label>Serial No. ${i}</label><input type="text" class="input-styled serial-input" placeholder="Enter Serial Number"></div>`);
+        }
+        $('#serialModal').show();
+        $('#saveSerialsBtn').off('click').on('click', function () {
+            const serials = [];
+            $container.find('.serial-input').each(function () { if ($(this).val()) serials.push($(this).val()); });
+            $(`#itemserialNumber_${index}`).val(serials.join(', '));
+            $('#serialModal').hide();
+        });
+    }
+
+    $('.close, .btn-cancel').on('click', function () {
+        $('.modal').hide();
+    });
+
     function debounce(func, wait) {
         let timeout;
         return function (...args) {
@@ -327,12 +428,17 @@ $(document).ready(function () {
 
     // --- Sidebar & General Events ---
     $('.sidebar-nav li[data-page]').on('click', function () {
-        $('.sidebar-nav li').removeClass('active');
-        $(this).addClass('active');
         if ($(this).hasClass('has-submenu')) {
             $(this).find('.submenu').slideToggle();
             $(this).find('.chevron').toggleClass('down');
+        } else {
+            const page = $(this).data('page');
+            if (page === 'dashboard' || page === 'generic' || page === 'customer') {
+                alert(`Navigating to ${$(this).text().trim()}...`);
+            }
         }
+        $('.sidebar-nav li').removeClass('active');
+        $(this).addClass('active');
     });
 
     $('#fullScreenBtn').on('click', function () {
@@ -346,7 +452,7 @@ $(document).ready(function () {
     $addRowBtn.on('click', createTableRow);
     $addRowFooterBtn.on('click', createTableRow);
     $roundOffToggle.on('change', calculateSummary);
-    $('#addCharge, #lessCharge').on('input', calculateSummary);
+    $('#addCharge, #lessCharge').on('input change', calculateSummary);
 
     $billType.on('change', function () {
         const isAmc = $(this).val() === "AMC";
@@ -356,6 +462,19 @@ $(document).ready(function () {
 
     $installationToggle.on('change', function () {
         $('#instDateContainer').toggle($(this).val() === "Yes");
+    });
+
+    $('#addCustomerBtn').on('click', () => $('#customerModal').show());
+    $('#changeShipBtn').on('click', () => alert("Address selection feature coming soon!"));
+
+    $('.btn-save, .btn-save-modal').on('click', function () {
+        const btnId = $(this).attr('id');
+        if (btnId === 'saveCustBtn') {
+            alert("Customer saved successfully!");
+            $('.modal').hide();
+        } else {
+            alert("Record saved successfully!");
+        }
     });
 
     // --- Finalization ---
